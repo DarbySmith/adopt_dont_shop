@@ -63,4 +63,49 @@ RSpec.describe 'admin applications show page' do
       expect(@pet3.adoptable).to eq(true)
     end
   end
+
+  it "has a button for each pet to reject their adoption" do
+
+    visit "/admin/applications/#{@application_1.id}"
+
+    within("#pet-#{@pet_1.id}") do
+      have_button?("Reject This Pet")
+      expect(@pet_1.adoptable).to eq(true)
+    end
+
+    within("#pet-#{@pet_3.id}") do
+      have_button?("Reject This Pet")
+      expect(@pet_3.adoptable).to eq(true)
+    end
+  end
+
+  it 'when reject button clicked for a specific pet, user is taken back to the
+    admin show pageand no longer buttons to approve or reject the pet pet' do
+  
+    visit "/admin/applications/#{@application_1.id}"
+
+    within("#pet-#{@pet_1.id}") do
+    expect(@pet_1.adoptable).to eq(true)
+    click_button "Reject This Pet"
+    end
+
+    expect(current_path).to eq("/admin/applications/#{@application_1.id}")
+
+    within("#pet-#{@pet_1.id}") do
+    @pet1 = Pet.find(@pet_1.id)
+    has_no_button?("Approve This Pet")
+    has_no_button?("Reject This Pet")
+    expect(page).to have_content("This pet has been rejected for this applicant")
+    expect(@pet1.adoptable).to eq(true)
+    end
+
+    within("#pet-#{@pet_3.id}") do
+    @pet3 = Pet.find(@pet_3.id)
+    have_button?("Approve This Pet")
+    have_button?("Reject This Pet")
+    expect(page).to_not have_content("This pet has been approved")
+    expect(page).to_not have_content("This pet has been rejected for this applicant")
+    expect(@pet3.adoptable).to eq(true)
+    end
+  end
 end
