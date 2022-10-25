@@ -4,16 +4,13 @@
 
 <% @pets.each do |pet| %>
   <section id="pet-<%= pet.id %>">
-  <%= pet.name %>
   <%= pet.id %>
-  <%= form_with url:"/admin/applications/#{@application.id}", method: :patch, local: true do |form| %>
-    <%= form.radio_button :status, "Approved" %>
-    <%= form.label :status_approve, "Approve" %>
-    <%= form.radio_button :status, "Rejected" %>
-    <%= form.label :status_reject, "Reject" %>
-    <%= form.hidden_field :pet, value: pet.id %>
-    <%= form.submit "Submit" %>
+  <%= pet.name %>
+  <% pet.adoptable %>
+  <% if pet.adoptable == true || pet.adoptable.nil? %>
+<%= button_to "Approve This Pet", "/admin/applications/#{@application.id}", method: :patch, params: {pet_id: pet.id, adoptable: false} %>
+  <% else %>
+  <p>This pet has been approved</p>
+  <% end %>
   </section>
   <% end %>
-<% end %>
-  
