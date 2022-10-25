@@ -9,7 +9,6 @@ class AdminApplicationsController < ApplicationController
     application = Application.find(params[:id])
     @pet = Pet.find(params[:pet_id])
     @pet.update(adoptable: params[:adoptable])
-    # binding.pry
     redirect_to "/admin/applications/#{application.id}"
   end
 

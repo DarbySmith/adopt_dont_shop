@@ -27,12 +27,12 @@ RSpec.describe 'admin applications show page' do
 
     within("#pet-#{@pet_1.id}") do
       have_button?("Approve This Pet")
-      # have_button?("Reject")
+      expect(@pet_1.adoptable).to eq(true)
     end
 
     within("#pet-#{@pet_3.id}") do
       have_button?("Approve This Pet")
-      # have_button?("Reject")
+      expect(@pet_3.adoptable).to eq(true)
     end
   end
 
@@ -46,16 +46,21 @@ RSpec.describe 'admin applications show page' do
     end
 
     expect(current_path).to eq("/admin/applications/#{@application_1.id}")
+
     within("#pet-#{@pet_1.id}") do
+      @pet1 = Pet.find(@pet_1.id)
       has_no_button?("Approve This Pet")
       has_no_button?("Reject")
       expect(page).to have_content("This pet has been approved")
+      expect(@pet1.adoptable).to eq(false)
     end
 
     within("#pet-#{@pet_3.id}") do
+      @pet3 = Pet.find(@pet_3.id)
       have_button?("Approve This Pet")
 
       expect(page).to_not have_content("This pet has been approved")
+      expect(@pet3.adoptable).to eq(true)
     end
   end
 end
