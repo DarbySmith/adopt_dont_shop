@@ -20,7 +20,7 @@
   pet_2 = Pet.create(adoptable: true, age: 3, breed: 'doberman', name: 'Lobster', shelter_id: shelter_1.id)
   pet_3 = Pet.create(adoptable: false, age: 8, breed: 'mix', name: 'Kumquat', shelter_id: shelter_2.id)
   pet_4 = Pet.create(adoptable: true, age: 1, breed: 'tabby', name: 'Garfield', shelter_id: shelter_4.id)
-  pet_5 = Pet.create(adoptable: true, age: 0, breed: 'calico', name: 'Lobster', shelter_id: shelter_3.id)
+  pet_5 = Pet.create(adoptable: true, age: 0, breed: 'calico', name: 'Postico', shelter_id: shelter_3.id)
   pet_6 = Pet.create(adoptable: true, age: 3, breed: 'corgie', name: 'Burrito', shelter_id: shelter_2.id)
 
   application_pet_1 = ApplicationPet.create!(application: application_3, pet: pet_1)
