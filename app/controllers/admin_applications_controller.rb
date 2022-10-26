@@ -1,4 +1,8 @@
 class AdminApplicationsController < ApplicationController
+  def index
+    @applications = Application.all
+  end
+  
   def show
     @application = Application.find(params[:id])
     @app_pets = ApplicationPet.where(application_id: @application.id)
